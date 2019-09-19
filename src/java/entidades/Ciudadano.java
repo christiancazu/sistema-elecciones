@@ -216,5 +216,9 @@ public class Ciudadano implements Serializable {
     public String toString() {
         return "entidades.Ciudadano[ id=" + id + " ]";
     }
+
+    public void setSexo(String sexo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
