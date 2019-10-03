@@ -3,8 +3,17 @@
 <jsp:include page='../componentes/comunes/cabecera.jsp'/>
 
 <div class="container">
+
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-5">
+            <div class="d-flex justify-content-center">
+                <a href="listarCiudadanos" class="mx-2">
+                <h1><span class="badge badge-secondary rounded-pill">Listar</span></h1>
+                </a>
+                <a href="registrarCiudadano" class="mx-2">
+                    <h1><span class="badge badge-secondary rounded-pill">Registrar</span></h1>
+                </a>
+            </div>
             <h1 class="text-center text-white">REGISTRO</h1>
             <div class="card card-signin my-5">                
                 <div class="card-body">
@@ -77,7 +86,7 @@
                             <c:choose>
                                 <c:when test="${mensaje == 'creado'}">
                                     <div class="alert alert-success alert-dismissible mt-3 rounded-pill fade show" role="alert">
-                                        <strong>Error!</strong> El ciudadano ha sido ${mensaje}
+                                        <strong>Correcto!</strong> El ciudadano ha sido ${mensaje}
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>

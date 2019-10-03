@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ciudadano.findBySexo", query = "SELECT c FROM Ciudadano c WHERE c.sexo = :sexo"),
     @NamedQuery(name = "Ciudadano.findByEstadocivil", query = "SELECT c FROM Ciudadano c WHERE c.estadocivil = :estadocivil"),
     @NamedQuery(name = "Ciudadano.findByCandidato", query = "SELECT c FROM Ciudadano c WHERE c.candidato = :candidato"),
+    @NamedQuery(name = "Ciudadano.findByMiembromesa", query = "SELECT c FROM Ciudadano c WHERE c.miembromesa = :miembromesa"),
     @NamedQuery(name = "Ciudadano.findByUsuario", query = "SELECT c FROM Ciudadano c WHERE c.usuario = :usuario"),
     @NamedQuery(name = "Ciudadano.findByClave", query = "SELECT c FROM Ciudadano c WHERE c.clave = :clave")})
 public class Ciudadano implements Serializable {
@@ -73,6 +74,8 @@ public class Ciudadano implements Serializable {
     @NotNull
     @Column(name = "candidato")
     private boolean candidato;
+    @Column(name = "miembromesa")
+    private Boolean miembromesa;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
@@ -168,6 +171,14 @@ public class Ciudadano implements Serializable {
         this.candidato = candidato;
     }
 
+    public Boolean getMiembromesa() {
+        return miembromesa;
+    }
+
+    public void setMiembromesa(Boolean miembromesa) {
+        this.miembromesa = miembromesa;
+    }
+
     public String getUsuario() {
         return usuario;
     }
@@ -215,10 +226,6 @@ public class Ciudadano implements Serializable {
     @Override
     public String toString() {
         return "entidades.Ciudadano[ id=" + id + " ]";
-    }
-
-    public void setSexo(String sexo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2019 at 09:29 AM
+-- Generation Time: Oct 04, 2019 at 01:25 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -38,6 +38,7 @@ CREATE TABLE `ciudadano` (
   `sexo` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
   `estadocivil` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
   `candidato` tinyint(1) NOT NULL DEFAULT 0,
+  `miembromesa` tinyint(1) DEFAULT 0,
   `usuario` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
   `clave` varchar(64) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -46,8 +47,8 @@ CREATE TABLE `ciudadano` (
 -- Dumping data for table `ciudadano`
 --
 
-INSERT INTO `ciudadano` (`id`, `dni`, `apellidos`, `nombres`, `ubigeo`, `direccion`, `sexo`, `estadocivil`, `candidato`, `usuario`, `clave`) VALUES
-(1, 0, '', 'admin', 1, NULL, 'M', 'S', 0, 'admin', 'admin');
+INSERT INTO `ciudadano` (`id`, `dni`, `apellidos`, `nombres`, `ubigeo`, `direccion`, `sexo`, `estadocivil`, `candidato`, `miembromesa`, `usuario`, `clave`) VALUES
+(1, 0, '', 'admin', 1, NULL, 'M', 'S', 0, NULL, 'admin', 'admin');
 
 -- --------------------------------------------------------
 

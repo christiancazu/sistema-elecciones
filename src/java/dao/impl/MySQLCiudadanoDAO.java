@@ -70,6 +70,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
             ciudadanos = new ArrayList<>();
             
             while (rs.next()) {
+                if (rs.getInt("id") == 1) continue;
                 Ciudadano ciudadano = new Ciudadano();
 
                 ciudadano.setId(rs.getInt("id"));
@@ -79,6 +80,8 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
                 ciudadano.setDireccion(rs.getString("direccion"));
                 ciudadano.setSexo(rs.getString("sexo").charAt(0));
                 ciudadano.setEstadocivil(rs.getString("estadocivil").charAt(0));
+                ciudadano.setCandidato(rs.getBoolean("candidato"));
+                ciudadano.setMiembromesa(rs.getBoolean("miembromesa"));
                 ciudadano.setUbigeo(new Ubigeo(rs.getInt("ubigeo")));
 
                 ciudadanos.add(ciudadano);
