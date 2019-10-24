@@ -85,6 +85,16 @@
                                 <option value="V">viudo</option>
                                 <option value="D">divorciado</option>
                             </select>
+                        </div>    
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputCandidato">Ciudadano</label>
+                            </div>
+                            <select name="candidato" class="custom-select" id="inputCandidato" required>                                     
+                                <option  disabled value="" selected hidden>Elegir...</option>
+                                <option value="candidato">candidato</option>
+                                <option value="elector">elector</option>
+                            </select>
                         </div>
 
                         <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Registrar</button>

@@ -54,8 +54,7 @@ public class RegistrarCiudadanoServlet extends HttpServlet {
         int ubigeo = Integer.parseInt(request.getParameter("ubigeo"));
         String sexo = request.getParameter("sexo");
         String estadocivil = request.getParameter("estadocivil");
-        Boolean candidato = request.getParameter("candidato").equals("candidato");
-                
+      
         try {
             Ciudadano ciudadano = new Ciudadano();
             ciudadano.setDni(dni);
@@ -65,7 +64,6 @@ public class RegistrarCiudadanoServlet extends HttpServlet {
             ciudadano.setUbigeo(new Ubigeo(ubigeo));
             ciudadano.setSexo(sexo.charAt(0));
             ciudadano.setEstadocivil(estadocivil.charAt(0));
-            ciudadano.setCandidato(candidato);
             
             mySQLCiudadanoDAO = new MySQLCiudadanoDAO();            
             

@@ -39,8 +39,9 @@ public class IdentificarCiudadanoServlet extends HttpServlet {
                 throw new Error();
             }
             if (VerificarRol.esAdmin(ciudadano)) {
-                RegistrarCiudadanoServlet rcs = new RegistrarCiudadanoServlet();
-                rcs.doGet(request, response);
+                ListarCiudadanosServlet lcs = new ListarCiudadanosServlet();
+                lcs.doGet(request, response);
+                return;
             }
             request.setAttribute("ciudadano", ciudadano);
             request.getRequestDispatcher(RutasJSP.VOTACION_CIUDADANO).forward(request, response);

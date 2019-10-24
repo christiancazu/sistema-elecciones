@@ -8,7 +8,9 @@
                 <h1 class="text-center text-white">BIENVENIDO A LA VOTACIÓN</h1>
                 <hr class="my-4">
                 <h3 class="text-center text-grey">
-                    <span class="badge badge-light">ciudadano:</span>
+                    <span class="badge badge-secondary rounded-pill">
+                        <h5 class="px-4">ciudadano: </h5>
+                    </span>
                     ${ciudadano.getNombres()} ${ciudadano.getApellidos()}
                 </h3>
                 <hr class="my-5">
