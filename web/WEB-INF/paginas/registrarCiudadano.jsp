@@ -13,32 +13,66 @@
             <div class="d-flex justify-content-center">
                 <a href="listarCiudadanos" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Listar</h1>
+                        <h5 class="px-4 text-wrap m-0">Listar ciudadanos</h5>
                     </span>
                 </a>
                 <a href="registrarCiudadano" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Registrar</h1>
+                        <h5 class="px-4 text-wrap m-0">Registrar ciudadano</h5>
+                    </span>
+                </a>
+                <a href="listarPartidos" class="mx-2">
+                    <span class="badge badge-secondary rounded-pill">
+                        <h5 class="px-4 text-wrap m-0">Listar partidos</h5>
                     </span>
                 </a>
                 <a href="registrarPartido" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Partido</h1>
+                        <h5 class="px-4 text-wrap m-0">Registrar partido</h5>
                     </span>
                 </a>
                 <a href="AsignarMiembrosMesa" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Miembros de Mesa</h1>
+                        <h5 class="px-4 text-wrap m-0">Miembros de Mesa</h5>
                     </span>
                 </a>
             </div>
             <h1 class="text-center text-white m-4">REGISTRO</h1>
             <div class="card card-signin">                
                 <div class="card-body">
+                    <%-- alerta mensaje registro inválido --%>    
+                    <c:if test="${not empty mensaje}">
+                        <c:choose>
+                            <c:when test="${mensaje == 'creado'}">
+                                <div class="alert alert-success alert-dismissible mt-3 rounded-pill fade show" role="alert">
+                                    <strong>Correcto!</strong> El ciudadano ha sido ${mensaje}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </c:when>
+                            <c:when test="${mensaje == 'ya existe'}">
+                                <div class="alert alert-warning alert-dismissible mt-3 rounded-pill fade show" role="alert">
+                                    <strong>Advertencia!</strong> El ciudadano ${mensaje}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="alert alert-danger alert-dismissible mt-3 rounded-pill fade show" role="alert">
+                                    <strong>Error!</strong> El ciudadano ${mensaje}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>                                
+                    </c:if>
                     <h5 class="card-title text-center">Registrar ciudadano</h5>
                     <form class="form-signin" action="registrarCiudadano" method="POST">                          
                         <div class="form-label-group">
-                            <input type="number" name="dni" id="inputDni" class="form-control" placeholder="ingrese su dni" required autofocus>
+                            <input type="number" name="dni" id="inputDni" min="0" max="99999999" class="form-control" placeholder="ingrese su dni" required autofocus>
                             <label for="inputDni">Dni</label>
                         </div>
                         <div class="form-label-group">
@@ -88,36 +122,7 @@
                         </div>
 
                         <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Registrar</button>
-
-                        <%-- alerta mensaje registro inválido --%>    
-                        <c:if test="${not empty mensaje}">
-                            <c:choose>
-                                <c:when test="${mensaje == 'creado'}">
-                                    <div class="alert alert-success alert-dismissible mt-3 rounded-pill fade show" role="alert">
-                                        <strong>Correcto!</strong> El ciudadano ha sido ${mensaje}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                </c:when>
-                                <c:when test="${mensaje == 'ya existe'}">
-                                    <div class="alert alert-warning alert-dismissible mt-3 rounded-pill fade show" role="alert">
-                                        <strong>Advertencia!</strong> El ciudadano ${mensaje}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="alert alert-danger alert-dismissible mt-3 rounded-pill fade show" role="alert">
-                                        <strong>Error!</strong> El ciudadano ${mensaje}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>                                
-                        </c:if>
+   
                     </form>
                 </div>
             </div>

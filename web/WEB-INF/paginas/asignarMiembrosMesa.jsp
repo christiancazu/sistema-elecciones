@@ -13,91 +13,93 @@
             <div class="d-flex justify-content-center">
                 <a href="listarCiudadanos" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Listar</h1>
+                        <h5 class="px-4 text-wrap m-0">Listar ciudadanos</h5>
                     </span>
                 </a>
                 <a href="registrarCiudadano" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Registrar</h1>
+                        <h5 class="px-4 text-wrap m-0">Registrar ciudadano</h5>
+                    </span>
+                </a>
+                <a href="listarPartidos" class="mx-2">
+                    <span class="badge badge-secondary rounded-pill">
+                        <h5 class="px-4 text-wrap m-0">Listar partidos</h5>
                     </span>
                 </a>
                 <a href="registrarPartido" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Partido</h1>
+                        <h5 class="px-4 text-wrap m-0">Registrar partido</h5>
                     </span>
                 </a>
                 <a href="AsignarMiembrosMesa" class="mx-2">
                     <span class="badge badge-secondary rounded-pill">
-                        <h1 class="px-4">Miembros de Mesa</h1>
+                        <h5 class="px-4 text-wrap m-0">Miembros de Mesa</h5>
                     </span>
                 </a>
             </div>
-            <h1 class="text-center text-white m-4">REGISTRO</h1>
+            <h1 class="text-center text-white m-4">ASIGNAR</h1>
             <div class="card card-signin">                
                 <div class="card-body">
-                    <h5 class="card-title text-center">Registrar ciudadano</h5>
-                    <form class="form-signin" action="registrarCiudadano" method="POST">                          
-                        <div class="form-label-group">
-                            <input type="number" name="dni" id="inputDni" class="form-control" placeholder="ingrese su dni" required autofocus>
-                            <label for="inputDni">Dni</label>
-                        </div>
-                        <div class="form-label-group">
-                            <input type="text" name="apellidos" id="inputApellidos" class="form-control" placeholder="ingrese sus apellidos" required>
-                            <label for="inputApellidos">Apellidos</label>
-                        </div>
-                        <div class="form-label-group">
-                            <input type="text" name="nombres" id="inputNombres" class="form-control" placeholder="ingrese sus nombres" required>
-                            <label for="inputNombres">Nombres</label>
-                        </div>
-                        <div class="form-label-group">
-                            <input type="text" name="direccion" id="inputDireccion" class="form-control" placeholder="ingrese su direccion" required>
-                            <label for="inputDireccion">Dirección</label>
-                        </div>
-                        <div class="input-group mb-3">
+                    <h5 class="card-title text-center">Asignar miembros de mesa</h5>
+                    <form class="form-signin" action="asignarMiembroMesa" method="POST">                          
+                        
+                        <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputUbigeo">Ubigeo</label>
+                                <label class="input-group-text" for="inputMesa">Mesa</label>
                             </div>
-                            <select name="ubigeo" class="custom-select" id="inputUbigeo" required>                                     
+                            <select name="mesa" class="custom-select" id="inputMesa" required>                                     
                                 <option  disabled value="" selected hidden>Elegir...</option>
-                                <c:forEach var="ubigeo" items="${ubigeos}">
-                                    <option value="${ubigeo.getId()}">${ubigeo.getNombre()}</option>
+                                <c:forEach var="mesa" items="${mesas}">
+                                    <option value="${mesa.getId()}">
+                                        ${mesa.getId()}
+                                    </option>
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="input-group mb-3">
+                        
+                        <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputSexo">Sexo</label>
+                                <label class="input-group-text" for="inputMiembrouno">Primer miembro</label>
                             </div>
-                            <select name="sexo" class="custom-select" id="inputSexo" required>                                     
+                            <select name="primermiembro" class="custom-select" id="inputMiembrouno" required>                                     
                                 <option  disabled value="" selected hidden>Elegir...</option>
-                                <option value="M">masculino</option>
-                                <option value="F">femenino</option>
+                                <c:forEach var="ciudadano" items="${ciudadanos}">
+                                    <option value="${ciudadano.getId()}">
+                                        ${ciudadano.getNombres()} ${ciudadano.getApellidos()}
+                                    </option>
+                                </c:forEach>
                             </select>
                         </div>
-                        <div class="input-group mb-3">
+                        
+                        <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputEstadocivil">Estado civil</label>
+                                <label class="input-group-text" for="inputMiembrouno">Segundo miembro</label>
                             </div>
-                            <select name="estadocivil" class="custom-select" id="inputEstadocivil" required>                                     
+                            <select name="primermiembro" class="custom-select" id="inputMiembrouno" required>                                     
                                 <option  disabled value="" selected hidden>Elegir...</option>
-                                <option value="S">soltero</option>
-                                <option value="C">casado</option>
-                                <option value="V">viudo</option>
-                                <option value="D">divorciado</option>
+                                <c:forEach var="ciudadano" items="${ciudadanos}">
+                                    <option value="${ciudadano.getId()}">
+                                        ${ciudadano.getNombres()} ${ciudadano.getApellidos()}
+                                    </option>
+                                </c:forEach>
                             </select>
-                        </div>    
-                        <div class="input-group mb-3">
+                        </div>
+                        
+                        <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="inputCandidato">Ciudadano</label>
+                                <label class="input-group-text" for="inputMiembrouno">Tercer miembro</label>
                             </div>
-                            <select name="candidato" class="custom-select" id="inputCandidato" required>                                     
+                            <select name="primermiembro" class="custom-select" id="inputMiembrouno" required>                                     
                                 <option  disabled value="" selected hidden>Elegir...</option>
-                                <option value="candidato">candidato</option>
-                                <option value="elector">elector</option>
+                                <c:forEach var="ciudadano" items="${ciudadanos}">
+                                    <option value="${ciudadano.getId()}">
+                                        ${ciudadano.getNombres()} ${ciudadano.getApellidos()}
+                                    </option>
+                                </c:forEach>
                             </select>
                         </div>
 
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Registrar</button>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Asignar</button>
 
                         <%-- alerta mensaje registro inválido --%>    
                         <c:if test="${not empty mensaje}">

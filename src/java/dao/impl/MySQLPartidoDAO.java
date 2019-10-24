@@ -25,6 +25,7 @@ public class MySQLPartidoDAO implements IPartidoDAO {
     private Connection connection;
     private PreparedStatement pstm;
     private ResultSet rs;
+    private ResultSet rsCiudadano;
     
     public MySQLPartidoDAO() {
         connection = MySQLConexion.conectar();
@@ -61,7 +62,7 @@ public class MySQLPartidoDAO implements IPartidoDAO {
         List<Partido> partidos = null;
         try {
             pstm = connection.prepareStatement(OBTENER_TODOS);
-            rs = pstm.executeQuery();
+            rs = pstm.executeQuery();            
 
             partidos = new ArrayList<>();
             
@@ -71,8 +72,21 @@ public class MySQLPartidoDAO implements IPartidoDAO {
                 partido.setId(rs.getInt("id"));
                 partido.setNombre(rs.getString("nombre"));
                 partido.setImagen(rs.getString("imagen"));
-                partido.setCiudadano(new Ciudadano(rs.getInt("ciudadano")));
+                
+                pstm = connection.prepareStatement(MySQLCiudadanoDAO.OBTENER_POR_ID);
+                pstm.setInt(1, rs.getInt("ciudadano"));
+                rsCiudadano = pstm.executeQuery();
+                rsCiudadano.next();
+            
+                Ciudadano ciudadano = new Ciudadano();
 
+                ciudadano.setId(rsCiudadano.getInt("id"));
+                ciudadano.setNombres(rsCiudadano.getString("nombres"));
+                ciudadano.setApellidos(rsCiudadano.getString("apellidos"));
+                ciudadano.setDni((rsCiudadano.getInt("dni")));
+                
+                partido.setCiudadano(ciudadano);
+                
                 partidos.add(partido);
             }
         } catch (SQLException ex) {
@@ -89,7 +103,7 @@ public class MySQLPartidoDAO implements IPartidoDAO {
         try {
             pstm = connection.prepareStatement(CREAR);
             
-            pstm.setString(1, partido.getNombre());
+            pstm.setString(1, partido.getNombre().toUpperCase());
             pstm.setString(2, partido.getImagen());
             pstm.setInt(3, partido.getCiudadano().getId());
             

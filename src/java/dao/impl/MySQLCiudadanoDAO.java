@@ -16,7 +16,7 @@ import utils.MySQLConexion;
 public class MySQLCiudadanoDAO implements ICiudadanoDAO {
 
     private static final String OBTENER_TODOS = "SELECT * FROM ciudadano";
-    private static final String OBTENER_POR_ID = "SELECT * FROM ciudadano WHERE id = ? LIMIT 1";
+    static final String OBTENER_POR_ID = "SELECT * FROM ciudadano WHERE id = ? LIMIT 1";
     private static final String OBTENER_TODOS_POR_UBIGEO = "SELECT * FROM ciudadano WHERE ubigeo = ?";
     private static final String OBTENER_TODOS_NO_MIEMBROS_DE_MESA = "SELECT * FROM ciudadano WHERE candidato = 0 AND miembromesa = 0";
     private static final String CREAR = "INSERT INTO ciudadano VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -103,8 +103,8 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
             pstm = connection.prepareStatement(CREAR);
             
             pstm.setInt(1, ciudadano.getDni());
-            pstm.setString(2, ciudadano.getApellidos());
-            pstm.setString(3, ciudadano.getNombres());
+            pstm.setString(2, ciudadano.getApellidos().toUpperCase());
+            pstm.setString(3, ciudadano.getNombres().toUpperCase());
             pstm.setInt(4, ciudadano.getUbigeo().getId());
             pstm.setString(5, ciudadano.getDireccion());
             pstm.setString(6, String.valueOf(ciudadano.getSexo()));
