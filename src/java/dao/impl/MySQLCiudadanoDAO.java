@@ -17,6 +17,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
 
     private static final String OBTENER_TODOS = "SELECT * FROM ciudadano";
     private static final String OBTENER_POR_ID = "SELECT * FROM ciudadano WHERE id = ? LIMIT 1";
+    private static final String OBTENER_POR_UBIGEO = "SELECT * FROM ciudadano WHERE ubigeo = ?";
     private static final String CREAR = "INSERT INTO ciudadano VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String ACTUALIZAR = "UPDATE ciudadano SET dni = ?, apellidos = ?, nombres = ?, ubigeo = ?, direccion = ?, sexo = ?, estadocivil = ?, candidato = ?, usuario = ?, clave = ? WHERE id = ?";
     private static final String ELIMINAR = "DELETE FROM ciudadano WHERE id = ?";
@@ -197,6 +198,41 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
             MySQLConexion.cerrar();
         }
         return ciudadano;
+    }
+
+    @Override
+    public List<Ciudadano> obtenerTodosPorUbigeo(int ubigeo) throws Exception {
+        List<Ciudadano> ciudadanos = null;
+        try {
+            pstm = connection.prepareStatement(OBTENER_POR_UBIGEO);
+            pstm.setInt(1, ubigeo);
+            rs = pstm.executeQuery();
+
+            ciudadanos = new ArrayList<>();
+            
+            while (rs.next()) {
+                if (rs.getInt("id") == 1) continue;
+                Ciudadano ciudadano = new Ciudadano();
+
+                ciudadano.setId(rs.getInt("id"));
+                ciudadano.setDni(rs.getInt("dni"));
+                ciudadano.setApellidos(rs.getString("apellidos"));
+                ciudadano.setNombres(rs.getString("nombres"));
+                ciudadano.setDireccion(rs.getString("direccion"));
+                ciudadano.setSexo(rs.getString("sexo").charAt(0));
+                ciudadano.setEstadocivil(rs.getString("estadocivil").charAt(0));
+                ciudadano.setCandidato(rs.getBoolean("candidato"));
+                ciudadano.setMiembromesa(rs.getBoolean("miembromesa"));
+                ciudadano.setUbigeo(new Ubigeo(rs.getInt("ubigeo")));
+
+                ciudadanos.add(ciudadano);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            MySQLConexion.cerrar();
+        }
+        return ciudadanos;
     }
 
 }

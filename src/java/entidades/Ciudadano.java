@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,14 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ciber
+ * @author Christian Carrillo Zúñiga
  */
 @Entity
 @Table(name = "ciudadano")
@@ -86,6 +84,14 @@ public class Ciudadano implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "clave")
     private String clave;
+    @OneToMany(mappedBy = "miembrodos")
+    private List<Mesa> mesaList;
+    @OneToMany(mappedBy = "miembrotres")
+    private List<Mesa> mesaList1;
+    @OneToMany(mappedBy = "miembrouno")
+    private List<Mesa> mesaList2;
+    @OneToMany(mappedBy = "ciudadano")
+    private List<Partido> partidoList;
     @JoinColumn(name = "ubigeo", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Ubigeo ubigeo;
@@ -195,6 +201,42 @@ public class Ciudadano implements Serializable {
         this.clave = clave;
     }
 
+    @XmlTransient
+    public List<Mesa> getMesaList() {
+        return mesaList;
+    }
+
+    public void setMesaList(List<Mesa> mesaList) {
+        this.mesaList = mesaList;
+    }
+
+    @XmlTransient
+    public List<Mesa> getMesaList1() {
+        return mesaList1;
+    }
+
+    public void setMesaList1(List<Mesa> mesaList1) {
+        this.mesaList1 = mesaList1;
+    }
+
+    @XmlTransient
+    public List<Mesa> getMesaList2() {
+        return mesaList2;
+    }
+
+    public void setMesaList2(List<Mesa> mesaList2) {
+        this.mesaList2 = mesaList2;
+    }
+
+    @XmlTransient
+    public List<Partido> getPartidoList() {
+        return partidoList;
+    }
+
+    public void setPartidoList(List<Partido> partidoList) {
+        this.partidoList = partidoList;
+    }
+
     public Ubigeo getUbigeo() {
         return ubigeo;
     }
@@ -227,5 +269,5 @@ public class Ciudadano implements Serializable {
     public String toString() {
         return "entidades.Ciudadano[ id=" + id + " ]";
     }
-    
+
 }

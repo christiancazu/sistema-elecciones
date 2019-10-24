@@ -1,35 +1,34 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Christian Carrillo Zúñiga
  */
 @Entity
-@Table(name = "ubigeo")
+@Table(name = "partido")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ubigeo.findAll", query = "SELECT u FROM Ubigeo u"),
-    @NamedQuery(name = "Ubigeo.findById", query = "SELECT u FROM Ubigeo u WHERE u.id = :id"),
-    @NamedQuery(name = "Ubigeo.findByNombre", query = "SELECT u FROM Ubigeo u WHERE u.nombre = :nombre")})
-public class Ubigeo implements Serializable {
+    @NamedQuery(name = "Partido.findAll", query = "SELECT p FROM Partido p"),
+    @NamedQuery(name = "Partido.findById", query = "SELECT p FROM Partido p WHERE p.id = :id"),
+    @NamedQuery(name = "Partido.findByNombre", query = "SELECT p FROM Partido p WHERE p.nombre = :nombre"),
+    @NamedQuery(name = "Partido.findByImagen", query = "SELECT p FROM Partido p WHERE p.imagen = :imagen")})
+public class Partido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,19 +41,21 @@ public class Ubigeo implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(mappedBy = "ubigeo")
-    private List<Mesa> mesaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ubigeo")
-    private List<Ciudadano> ciudadanoList;
+    @Size(max = 64)
+    @Column(name = "imagen")
+    private String imagen;
+    @JoinColumn(name = "ciudadano", referencedColumnName = "id")
+    @ManyToOne
+    private Ciudadano ciudadano;
 
-    public Ubigeo() {
+    public Partido() {
     }
 
-    public Ubigeo(Integer id) {
+    public Partido(Integer id) {
         this.id = id;
     }
 
-    public Ubigeo(Integer id, String nombre) {
+    public Partido(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
@@ -75,22 +76,20 @@ public class Ubigeo implements Serializable {
         this.nombre = nombre;
     }
 
-    @XmlTransient
-    public List<Mesa> getMesaList() {
-        return mesaList;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setMesaList(List<Mesa> mesaList) {
-        this.mesaList = mesaList;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    @XmlTransient
-    public List<Ciudadano> getCiudadanoList() {
-        return ciudadanoList;
+    public Ciudadano getCiudadano() {
+        return ciudadano;
     }
 
-    public void setCiudadanoList(List<Ciudadano> ciudadanoList) {
-        this.ciudadanoList = ciudadanoList;
+    public void setCiudadano(Ciudadano ciudadano) {
+        this.ciudadano = ciudadano;
     }
 
     @Override
@@ -103,10 +102,10 @@ public class Ubigeo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Ubigeo)) {
+        if (!(object instanceof Partido)) {
             return false;
         }
-        Ubigeo other = (Ubigeo) object;
+        Partido other = (Partido) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -115,7 +114,7 @@ public class Ubigeo implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Ubigeo[ id=" + id + " ]";
+        return "entidades.Partido[ id=" + id + " ]";
     }
 
 }
