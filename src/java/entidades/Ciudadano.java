@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entidades;
 
 import java.io.Serializable;
@@ -21,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Christian Carrillo Zúñiga
+ * @author ciber
  */
 @Entity
 @Table(name = "ciudadano")
@@ -37,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ciudadano.findByEstadocivil", query = "SELECT c FROM Ciudadano c WHERE c.estadocivil = :estadocivil"),
     @NamedQuery(name = "Ciudadano.findByCandidato", query = "SELECT c FROM Ciudadano c WHERE c.candidato = :candidato"),
     @NamedQuery(name = "Ciudadano.findByMiembromesa", query = "SELECT c FROM Ciudadano c WHERE c.miembromesa = :miembromesa"),
+    @NamedQuery(name = "Ciudadano.findByEmitido", query = "SELECT c FROM Ciudadano c WHERE c.emitido = :emitido"),
     @NamedQuery(name = "Ciudadano.findByUsuario", query = "SELECT c FROM Ciudadano c WHERE c.usuario = :usuario"),
     @NamedQuery(name = "Ciudadano.findByClave", query = "SELECT c FROM Ciudadano c WHERE c.clave = :clave")})
 public class Ciudadano implements Serializable {
@@ -74,6 +80,8 @@ public class Ciudadano implements Serializable {
     private boolean candidato;
     @Column(name = "miembromesa")
     private Boolean miembromesa;
+    @Column(name = "emitido")
+    private Boolean emitido;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
@@ -84,6 +92,8 @@ public class Ciudadano implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "clave")
     private String clave;
+    @OneToMany(mappedBy = "ciudadano")
+    private List<Voto> votoList;
     @OneToMany(mappedBy = "miembrodos")
     private List<Mesa> mesaList;
     @OneToMany(mappedBy = "miembrotres")
@@ -185,6 +195,14 @@ public class Ciudadano implements Serializable {
         this.miembromesa = miembromesa;
     }
 
+    public Boolean getEmitido() {
+        return emitido;
+    }
+
+    public void setEmitido(Boolean emitido) {
+        this.emitido = emitido;
+    }
+
     public String getUsuario() {
         return usuario;
     }
@@ -199,6 +217,15 @@ public class Ciudadano implements Serializable {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    @XmlTransient
+    public List<Voto> getVotoList() {
+        return votoList;
+    }
+
+    public void setVotoList(List<Voto> votoList) {
+        this.votoList = votoList;
     }
 
     @XmlTransient
@@ -269,5 +296,5 @@ public class Ciudadano implements Serializable {
     public String toString() {
         return "entidades.Ciudadano[ id=" + id + " ]";
     }
-
+    
 }

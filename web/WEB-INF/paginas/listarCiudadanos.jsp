@@ -2,6 +2,14 @@
 
 <jsp:include page='../componentes/comunes/cabecera.jsp'/>
 
+<div class="btn-salir-container">
+    <a href="${pageContext.request.contextPath}" class="mx-2">
+        <span class="badge badge-secondary rounded-pill">
+            <h5 class="px-4 text-wrap m-0">salir</h5>
+        </span>
+    </a>
+</div>
+
 <div class="container my-5">
     <div class="jumbotron jumbotron-fluid bg-light rounded-pill p-0">
         <div class="container">
@@ -48,6 +56,7 @@
             <th scope="col">Nombres</th>
             <th scope="col" class="text-center">Candidato</th>
             <th scope="col" class="text-center">Miembro de mesa</th>
+            <th scope="col" class="text-center">Voto emitido</th>
 <!--            <th scope="col" class="text-center">Acción</th>-->
           </tr>
         </thead>
@@ -74,6 +83,20 @@
             <td class="text-center">
                 <c:choose>
                     <c:when test="${ciudadano.getMiembromesa() == true}">
+                        <span class="badge badge-primary badge-outlined">
+                            <div class="h6 mb-0">si</div>
+                        </span>
+                    </c:when>
+                    <c:otherwise>
+                         <span class="badge badge-danger badge-outlined">
+                             <div class="h6 mb-0">no</div>
+                         </span>
+                    </c:otherwise>
+                </c:choose>
+            </td>
+            <td class="text-center">
+                <c:choose>
+                    <c:when test="${ciudadano.getEmitido()}">
                         <span class="badge badge-primary badge-outlined">
                             <div class="h6 mb-0">si</div>
                         </span>

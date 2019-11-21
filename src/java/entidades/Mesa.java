@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package entidades;
 
 import java.io.Serializable;
@@ -16,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Christian Carrillo Zúñiga
+ * @author ciber
  */
 @Entity
 @Table(name = "mesa")
@@ -116,5 +121,5 @@ public class Mesa implements Serializable {
     public String toString() {
         return "entidades.Mesa[ id=" + id + " ]";
     }
-
+    
 }

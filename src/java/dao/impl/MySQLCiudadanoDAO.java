@@ -19,7 +19,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
     static final String OBTENER_POR_ID = "SELECT * FROM ciudadano WHERE id = ? LIMIT 1";
     private static final String OBTENER_TODOS_POR_UBIGEO = "SELECT * FROM ciudadano WHERE ubigeo = ?";
     private static final String OBTENER_TODOS_NO_MIEMBROS_DE_MESA = "SELECT * FROM ciudadano WHERE candidato = 0 AND miembromesa = 0";
-    private static final String CREAR = "INSERT INTO ciudadano VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String CREAR = "INSERT INTO ciudadano VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String ACTUALIZAR = "UPDATE ciudadano SET dni = ?, apellidos = ?, nombres = ?, ubigeo = ?, direccion = ?, sexo = ?, estadocivil = ?, candidato = ?, usuario = ?, clave = ? WHERE id = ?";
     private static final String ELIMINAR = "DELETE FROM ciudadano WHERE id = ?";
     private static final String IDENTIFICAR = "SELECT * FROM ciudadano WHERE usuario = ? AND clave = ? LIMIT 1";
@@ -53,6 +53,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
             ciudadano.setDireccion(rs.getString("direccion"));
             ciudadano.setSexo(rs.getString("sexo").charAt(0));
             ciudadano.setEstadocivil(rs.getString("estadocivil").charAt(0));
+            ciudadano.setEmitido(rs.getBoolean("emitido"));
             ciudadano.setUbigeo(new Ubigeo(rs.getInt("ubigeo")));
         } catch (SQLException ex) {
             Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,6 +85,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
                 ciudadano.setEstadocivil(rs.getString("estadocivil").charAt(0));
                 ciudadano.setCandidato(rs.getBoolean("candidato"));
                 ciudadano.setMiembromesa(rs.getBoolean("miembromesa"));
+                ciudadano.setEmitido(rs.getBoolean("emitido"));
                 ciudadano.setUbigeo(new Ubigeo(rs.getInt("ubigeo")));
 
                 ciudadanos.add(ciudadano);
@@ -111,8 +113,9 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
             pstm.setString(7, String.valueOf(ciudadano.getEstadocivil()));
             pstm.setBoolean(8, false);
             pstm.setBoolean(9, false);
-            pstm.setString(10, Integer.toString(ciudadano.getDni()));
+            pstm.setBoolean(10, false);
             pstm.setString(11, Integer.toString(ciudadano.getDni()));
+            pstm.setString(12, Integer.toString(ciudadano.getDni()));
             
             pstm.executeUpdate();
             
@@ -192,6 +195,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
             ciudadano.setNombres(rs.getString("nombres"));
             ciudadano.setDireccion(rs.getString("direccion"));
             ciudadano.setSexo(rs.getString("sexo").charAt(0));
+            ciudadano.setEmitido(rs.getBoolean("emitido"));
             ciudadano.setEstadocivil(rs.getString("estadocivil").charAt(0));
             ciudadano.setUbigeo(new Ubigeo(rs.getInt("ubigeo")));
         } catch (SQLException ex) {
@@ -224,6 +228,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
                 ciudadano.setSexo(rs.getString("sexo").charAt(0));
                 ciudadano.setEstadocivil(rs.getString("estadocivil").charAt(0));
                 ciudadano.setCandidato(rs.getBoolean("candidato"));
+                ciudadano.setEmitido(rs.getBoolean("emitido"));
                 ciudadano.setMiembromesa(rs.getBoolean("miembromesa"));
                 ciudadano.setUbigeo(new Ubigeo(rs.getInt("ubigeo")));
 
@@ -259,6 +264,7 @@ public class MySQLCiudadanoDAO implements ICiudadanoDAO {
                 ciudadano.setEstadocivil(rs.getString("estadocivil").charAt(0));
                 ciudadano.setCandidato(rs.getBoolean("candidato"));
                 ciudadano.setMiembromesa(rs.getBoolean("miembromesa"));
+                ciudadano.setEmitido(rs.getBoolean("emitido"));
                 ciudadano.setUbigeo(new Ubigeo(rs.getInt("ubigeo")));
 
                 ciudadanos.add(ciudadano);

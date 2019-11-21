@@ -44,8 +44,8 @@ public class IdentificarCiudadanoServlet extends HttpServlet {
                 return;
             }
             request.setAttribute("ciudadano", ciudadano);
-            request.getRequestDispatcher(RutasJSP.VOTACION_CIUDADANO).forward(request, response);
-            
+            VotacionCiudadanoServlet vcs = new VotacionCiudadanoServlet();
+            vcs.doGet(request, response); 
         } catch (Exception e) {
             request.setAttribute("mensaje", "no es válido");
             request.getRequestDispatcher(RutasJSP.INDEX).forward(request, response);

@@ -2,6 +2,14 @@
 
 <jsp:include page='../componentes/comunes/cabecera.jsp'/>
 
+<div class="btn-salir-container">
+    <a href="${pageContext.request.contextPath}" class="mx-2">
+        <span class="badge badge-secondary rounded-pill">
+            <h5 class="px-4 text-wrap m-0">salir</h5>
+        </span>
+    </a>
+</div>
+
 <div class="container my-5">
     <div class="jumbotron jumbotron-fluid bg-light rounded-pill p-0">
         <div class="container">

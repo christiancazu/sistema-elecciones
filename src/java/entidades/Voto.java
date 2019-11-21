@@ -17,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,14 +24,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ciber
  */
 @Entity
-@Table(name = "partido")
+@Table(name = "voto")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Partido.findAll", query = "SELECT p FROM Partido p"),
-    @NamedQuery(name = "Partido.findById", query = "SELECT p FROM Partido p WHERE p.id = :id"),
-    @NamedQuery(name = "Partido.findByNombre", query = "SELECT p FROM Partido p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Partido.findByImagen", query = "SELECT p FROM Partido p WHERE p.imagen = :imagen")})
-public class Partido implements Serializable {
+    @NamedQuery(name = "Voto.findAll", query = "SELECT v FROM Voto v"),
+    @NamedQuery(name = "Voto.findById", query = "SELECT v FROM Voto v WHERE v.id = :id"),
+    @NamedQuery(name = "Voto.findByEleccion", query = "SELECT v FROM Voto v WHERE v.eleccion = :eleccion")})
+public class Voto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,28 +38,17 @@ public class Partido implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "nombre")
-    private String nombre;
-    @Size(max = 64)
-    @Column(name = "imagen")
-    private String imagen;
+    @Column(name = "eleccion")
+    private Integer eleccion;
     @JoinColumn(name = "ciudadano", referencedColumnName = "id")
     @ManyToOne
     private Ciudadano ciudadano;
 
-    public Partido() {
+    public Voto() {
     }
 
-    public Partido(Integer id) {
+    public Voto(Integer id) {
         this.id = id;
-    }
-
-    public Partido(Integer id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
     }
 
     public Integer getId() {
@@ -73,20 +59,12 @@ public class Partido implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Integer getEleccion() {
+        return eleccion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
+    public void setEleccion(Integer eleccion) {
+        this.eleccion = eleccion;
     }
 
     public Ciudadano getCiudadano() {
@@ -107,10 +85,10 @@ public class Partido implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Partido)) {
+        if (!(object instanceof Voto)) {
             return false;
         }
-        Partido other = (Partido) object;
+        Voto other = (Voto) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -119,7 +97,7 @@ public class Partido implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Partido[ id=" + id + " ]";
+        return "entidades.Voto[ id=" + id + " ]";
     }
     
 }
