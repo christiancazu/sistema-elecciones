@@ -15,7 +15,7 @@ public final class ManejadorArchivo {
     // in windows: C:\\...\\sistema-elecciones\\web\\recursos\\imagenes
     // in linux: /home/.../sistema-elecciones/web/recursos/imagenes
     private static final String PATH_IMAGES_FOLDER
-            = "/home/ciber/NetBeansProjects/sistema-elecciones/web/recursos/imagenes";
+            = "/home/ciber/dev/java/sistema-elecciones/web/recursos/imagenes";
 
     /**
      * save File in server

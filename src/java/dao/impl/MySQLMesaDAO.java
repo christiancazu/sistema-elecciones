@@ -19,8 +19,9 @@ public class MySQLMesaDAO implements IMesaDAO {
     private static final String OBTENER_TODOS = "SELECT * FROM mesa";
     private static final String OBTENER_POR_ID = "SELECT * FROM mesa WHERE id = ? LIMIT 1";
     private static final String CREAR = "INSERT INTO mesa VALUES(null, ?, ?, ?, ?)";
-    private static final String ACTUALIZAR = "UPDATE mesa SET ubigeo = ?, miembrouno = ?, miembrodos = ?, miembrotres = ? WHERE id = ?";
+    private static final String ACTUALIZAR = "UPDATE mesa SET miembrouno = ?, miembrodos = ?, miembrotres = ? WHERE id = ?";
     private static final String ELIMINAR = "DELETE FROM mesa WHERE id = ?";
+    private static final String ESTABLECER_CIUDADANO_MIEMBRO_MESA = "UPDATE ciudadano SET miembromesa = 1 WHERE id = ?";
     
     private Connection connection;
     private PreparedStatement pstm;
@@ -112,17 +113,32 @@ public class MySQLMesaDAO implements IMesaDAO {
         boolean actualizado = false;
         try {
             pstm = connection.prepareStatement(ACTUALIZAR);
+
+            pstm.setInt(1, mesa.getMiembrouno().getId());
+            pstm.setInt(2, mesa.getMiembrodos().getId());
+            pstm.setInt(3, mesa.getMiembrotres().getId());
             
-            pstm.setInt(1, mesa.getUbigeo().getId());
-            pstm.setInt(2, mesa.getMiembrouno().getId());
-            pstm.setInt(3, mesa.getMiembrodos().getId());
-            pstm.setInt(4, mesa.getMiembrotres().getId());
-            
-            pstm.setInt(5, mesa.getId());
+            pstm.setInt(4, mesa.getUbigeo().getId());
             
             pstm.executeUpdate();
             
-            actualizado = true;
+            // estableciendo miembro uno como miembromesa en tabla ciudadano
+            pstm = connection.prepareStatement(ESTABLECER_CIUDADANO_MIEMBRO_MESA);
+            pstm.setInt(1, mesa.getMiembrouno().getId());
+            pstm.executeUpdate();
+            
+            // estableciendo miembro dos como miembromesa en tabla ciudadano
+            pstm = connection.prepareStatement(ESTABLECER_CIUDADANO_MIEMBRO_MESA);
+            pstm.setInt(1, mesa.getMiembrodos().getId());
+            pstm.executeUpdate();
+            
+            // estableciendo miembro uno como miembromesa en tabla ciudadano
+            pstm = connection.prepareStatement(ESTABLECER_CIUDADANO_MIEMBRO_MESA);
+            pstm.setInt(1, mesa.getMiembrotres().getId());
+            pstm.executeUpdate();
+            
+            actualizado = true;            
+            
         } catch (SQLException ex) {
             Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
