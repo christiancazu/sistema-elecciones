@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 24, 2019 at 12:40 PM
--- Server version: 10.1.40-MariaDB
--- PHP Version: 7.3.5
+-- Generation Time: Nov 21, 2019 at 10:20 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -37,8 +37,9 @@ CREATE TABLE `ciudadano` (
   `direccion` varchar(128) COLLATE utf8_spanish_ci DEFAULT NULL,
   `sexo` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
   `estadocivil` char(1) COLLATE utf8_spanish_ci DEFAULT NULL,
-  `candidato` tinyint(1) NOT NULL DEFAULT '0',
-  `miembromesa` tinyint(1) DEFAULT '0',
+  `candidato` tinyint(1) NOT NULL DEFAULT 0,
+  `miembromesa` tinyint(1) DEFAULT 0,
+  `emitido` tinyint(1) DEFAULT 0,
   `usuario` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
   `clave` varchar(64) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -47,17 +48,18 @@ CREATE TABLE `ciudadano` (
 -- Dumping data for table `ciudadano`
 --
 
-INSERT INTO `ciudadano` (`id`, `dni`, `apellidos`, `nombres`, `ubigeo`, `direccion`, `sexo`, `estadocivil`, `candidato`, `miembromesa`, `usuario`, `clave`) VALUES
-(1, 0, '', 'admin', 1, NULL, 'M', 'S', 0, NULL, 'admin', 'admin'),
-(2, 40205952, 'ABAD VILLACREZ', 'CESAR HUMBERTO', 1, 'Príncipe de Vergara 36, 5º derecha', 'M', 'S', 0, 1, '40205952', '40205952'),
-(3, 45106970, 'ABAD SEGURA', 'MARIA DEL PILAR', 1, 'Calle Cristobal Bordiú 49', 'F', 'S', 0, 0, '45106970', '45106970'),
-(4, 46177490, 'ABAD SERNAQUE', 'FIORELLA YVONNE', 2, 'Avenida de Roma 157, 1ra planta', 'F', 'C', 0, 1, '46177490', '46177490'),
-(5, 73572529, 'ABAD RAZURI', 'ANALIA', 3, 'Jorge Basadre 498', 'F', 'S', 0, 0, '73572529', '73572529'),
-(6, 71535753, 'ABAD MUÑOZ', 'YUTSIAM JANDIRE', 2, 'Calle Los Pinos, 490, San Isidro', 'F', 'C', 0, 0, '71535753', '71535753'),
-(7, 43465561, 'ABAD ALBERCA', 'JOSE CELIS', 5, 'Avenida Arequipa 3415', 'M', 'S', 0, 0, '43465561', '43465561'),
-(8, 42854895, 'ABAD CAUTI', 'JANNETTE CAROL', 4, 'av MARISCAL URETA 1420 COSTADO DE MI BANCO', 'F', 'S', 0, 0, '42854895', '42854895'),
-(9, 70466504, 'ABAD VILLACREZ', 'DESSIRE MILAGROS', 3, 'Urb. El Pacífico Mz. E – Lote 1', 'F', 'D', 0, 1, '70466504', '70466504'),
-(10, 71799383, 'ABAD VILLACREZ', 'ANAROSS ROSARIO', 1, 'Av. Universitaria 4265, San Martín de Porres 15109', 'F', 'C', 0, 0, '71799383', '71799383');
+INSERT INTO `ciudadano` (`id`, `dni`, `apellidos`, `nombres`, `ubigeo`, `direccion`, `sexo`, `estadocivil`, `candidato`, `miembromesa`, `emitido`, `usuario`, `clave`) VALUES
+(1, 0, '', 'admin', 1, NULL, 'M', 'S', 0, NULL, -1, 'admin', 'admin'),
+(2, 40205952, 'ABAD VILLACREZ', 'CESAR HUMBERTO', 1, 'Príncipe de Vergara 36, 5º derecha', 'M', 'S', 0, 1, 1, '40205952', '40205952'),
+(3, 45106970, 'ABAD SEGURA', 'MARIA DEL PILAR', 1, 'Calle Cristobal Bordiú 49', 'F', 'S', 0, 1, 1, '45106970', '45106970'),
+(4, 46177490, 'ABAD SERNAQUE', 'FIORELLA YVONNE', 2, 'Avenida de Roma 157, 1ra planta', 'F', 'C', 1, 0, 0, '46177490', '46177490'),
+(5, 73572529, 'ABAD RAZURI', 'ANALIA', 3, 'Jorge Basadre 498', 'F', 'S', 1, 0, 0, '73572529', '73572529'),
+(6, 71535753, 'ABAD MUÑOZ', 'YUTSIAM JANDIRE', 2, 'Calle Los Pinos, 490, San Isidro', 'F', 'C', 0, 0, 0, '71535753', '71535753'),
+(7, 43465561, 'ABAD ALBERCA', 'JOSE CELIS', 5, 'Avenida Arequipa 3415', 'M', 'S', 0, 0, 0, '43465561', '43465561'),
+(8, 42854895, 'ABAD CAUTI', 'JANNETTE CAROL', 4, 'av MARISCAL URETA 1420 COSTADO DE MI BANCO', 'F', 'S', 0, 0, 0, '42854895', '42854895'),
+(9, 70466504, 'ABAD VILLACREZ', 'DESSIRE MILAGROS', 3, 'Urb. El Pacífico Mz. E – Lote 1', 'F', 'D', 0, 0, 0, '70466504', '70466504'),
+(10, 71799383, 'ABAD VILLACREZ', 'ANAROSS ROSARIO', 1, 'Av. Universitaria 4265, San Martín de Porres 15109', 'F', 'C', 0, 1, 0, '71799383', '71799383'),
+(11, 44086458, 'PÉREZ GALLARDO', 'MARCELO', 1, 'Av Arequipa 311', 'M', 'S', 0, 0, 0, '44086458', '44086458');
 
 -- --------------------------------------------------------
 
@@ -78,7 +80,7 @@ CREATE TABLE `mesa` (
 --
 
 INSERT INTO `mesa` (`id`, `ubigeo`, `miembrouno`, `miembrodos`, `miembrotres`) VALUES
-(1, 1, NULL, NULL, NULL),
+(1, 1, 2, 3, 10),
 (2, 2, NULL, NULL, NULL),
 (3, 3, NULL, NULL, NULL),
 (4, 4, NULL, NULL, NULL),
@@ -99,6 +101,14 @@ CREATE TABLE `partido` (
   `imagen` varchar(64) COLLATE utf8mb4_bin DEFAULT NULL,
   `ciudadano` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `partido`
+--
+
+INSERT INTO `partido` (`id`, `nombre`, `imagen`, `ciudadano`) VALUES
+(1, 'TEST', '20191024044028.png', 4),
+(2, 'FOO', '20191121094230.png', 5);
 
 -- --------------------------------------------------------
 
@@ -124,6 +134,26 @@ INSERT INTO `ubigeo` (`id`, `nombre`) VALUES
 (6, 'Condesuyos'),
 (7, 'Islay'),
 (8, 'La Unión');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `voto`
+--
+
+CREATE TABLE `voto` (
+  `id` int(11) NOT NULL,
+  `ciudadano` int(11) DEFAULT NULL,
+  `eleccion` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Dumping data for table `voto`
+--
+
+INSERT INTO `voto` (`id`, `ciudadano`, `eleccion`) VALUES
+(1, 2, 0),
+(2, 3, NULL);
 
 --
 -- Indexes for dumped tables
@@ -161,6 +191,13 @@ ALTER TABLE `ubigeo`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `voto`
+--
+ALTER TABLE `voto`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ciudadano` (`ciudadano`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -168,7 +205,7 @@ ALTER TABLE `ubigeo`
 -- AUTO_INCREMENT for table `ciudadano`
 --
 ALTER TABLE `ciudadano`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `mesa`
@@ -180,13 +217,19 @@ ALTER TABLE `mesa`
 -- AUTO_INCREMENT for table `partido`
 --
 ALTER TABLE `partido`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ubigeo`
 --
 ALTER TABLE `ubigeo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `voto`
+--
+ALTER TABLE `voto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -212,6 +255,12 @@ ALTER TABLE `mesa`
 --
 ALTER TABLE `partido`
   ADD CONSTRAINT `fk_ciudadano` FOREIGN KEY (`ciudadano`) REFERENCES `ciudadano` (`id`);
+
+--
+-- Constraints for table `voto`
+--
+ALTER TABLE `voto`
+  ADD CONSTRAINT `voto_ibfk_1` FOREIGN KEY (`ciudadano`) REFERENCES `ciudadano` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

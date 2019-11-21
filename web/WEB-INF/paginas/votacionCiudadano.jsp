@@ -55,7 +55,7 @@
                         <c:forEach var="partido" items="${partidos}">  
                             <tr>
                                 <td style="line-height: 4;">${partido.getNombre()}</td>
-                                <td style="line-height: 4;">${partido.getNombre()}</td>
+                                <td style="line-height: 4;">${partido.getCiudadano().getApellidos()} ${partido.getCiudadano().getNombres()}</td>
                                 <td class="d-flex justify-content-end">
                                     <div class="img-votacion-container">
                                         <img src="${pageContext.request.contextPath}/recursos/imagenes/${partido.getImagen()}" class="img-votacion" alt="...">

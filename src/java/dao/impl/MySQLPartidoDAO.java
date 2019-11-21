@@ -21,7 +21,7 @@ public class MySQLPartidoDAO implements IPartidoDAO {
     private static final String ASIGNAR_CANDIDATO = "UPDATE ciudadano SET candidato = 1 where id = ?";
     private static final String ACTUALIZAR = "UPDATE partido SET nombre = ?, imagen = ?, ciudadano = ? WHERE id = ?";
     private static final String ELIMINAR = "DELETE FROM partido WHERE id = ?";
-    
+
     private Connection connection;
     private PreparedStatement pstm;
     private ResultSet rs;
