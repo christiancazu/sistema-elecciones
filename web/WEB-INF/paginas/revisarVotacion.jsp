@@ -90,7 +90,6 @@
             type: 'GET',
             url: 'revisarVotacion?ubigeo=' + id,
             success: function (respuesta) {
-                console.warn(respuesta)
                 rellenarTituloResultados(respuesta)
                 rellenarNulos(respuesta)
                 rellenarBlancos(respuesta)
@@ -110,14 +109,14 @@
         $trNulos.children().eq(1).empty()
         $trNulos.children().eq(2).empty()
         $trNulos.children()[1].append(nulos | 0)
-        $trNulos.children()[2].append(((nulos/total*100).toFixed(2) | 0)  + ' %')
+        $trNulos.children()[2].append((isNaN((nulos/total*100).toFixed(2)) ? '0.00' : ((nulos/total*100).toFixed(2)))  + ' %')
     }
     
     function rellenarBlancos({total, blancos}) {
         $trBlancos.children().eq(1).empty()
         $trBlancos.children().eq(2).empty()
         $trBlancos.children()[1].append(blancos | 0)
-        $trBlancos.children()[2].append(((blancos/total*100).toFixed(2) | 0)  + ' %')
+        $trBlancos.children()[2].append((isNaN((blancos/total*100).toFixed(2)) ? '0.00' : ((blancos/total*100).toFixed(2)))  + ' %')
     }
     
     function rellenarPartidoVotos({total, partidoVotos}) {
@@ -126,6 +125,8 @@
         $('.partidos-insertados').remove()
        
         partidoVotos.forEach(partidoVoto => {
+            const porcentaje = (isNaN((partidoVoto.votos/total*100).toFixed(2)) ? '0.00' : ((partidoVoto.votos/total*100).toFixed(2)))
+
             plantilla += '<tr class="partidos-insertados"><td class="d-flex justify-content-between">'
             plantilla += partidoVoto.partido.nombre
             plantilla += '<div class="img-votacion-container">'
@@ -136,8 +137,8 @@
             plantilla += partidoVoto.votos | 0
             plantilla += '</td>'
             plantilla += '<td class="text-center" style="width: 2rem">'
-            plantilla += ((partidoVoto.votos/total*100).toFixed(2) | 0)  + ' %'
-            plantilla += '</td></tr>'
+            plantilla += porcentaje
+            plantilla += ' %</td></tr>'
         })
         
         $(plantilla).insertBefore($trTotal)  
