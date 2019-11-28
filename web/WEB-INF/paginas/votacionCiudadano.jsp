@@ -36,7 +36,7 @@
                 <input type="hidden" name="ciudadano" value="${ciudadano.getId()}" id="ciudadanoId">
 
                 <div class="d-none" id="emitido">${ciudadano.getEmitido()}</div>
-                
+
                 <table class="table table-striped table-hover bg-white">
                     <thead class="thead-dark">
                         <tr>
@@ -82,36 +82,36 @@
                             </td>
                         </tr>
                         <tr style="display: none">
-                    <input type="radio" value="blanco" name="eleccion" checked style="display: none" >
-                    </tr>
+                            <input type="radio" value="blanco" name="eleccion" checked style="display: none" >
+                        </tr>
                     </tbody>
                 </table>
 
                 <div class="d-flex justify-content-end">
-                <button class="btn btn-lg btn-success border-dark text-uppercase" type="submit" id="btn-votacion">
-                    Registrar votación
-                </button>
-                 </div>   
-                
+                    <button class="btn btn-lg btn-success border-dark text-uppercase" type="submit" id="btn-votacion">
+                        Registrar votación
+                    </button>
+                </div>   
+
             </form>
-                <div id="voto-correcto" class="d-none alert alert-success alert-dismissible mt-3 rounded-pill fade show" role="alert">
-                    <strong>Correcto!</strong> Su voto ha sido emitido <span></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="voto-incorrecto" class="d-none alert alert-danger alert-dismissible mt-3 rounded-pill fade show" role="alert">
-                    <strong>Error!</strong> Su voto no pudo ser emitido
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="voto-hecho" class="d-none alert alert-warning alert-dismissible mt-3 rounded-pill fade show" role="alert">
-                    <strong>Atención!</strong> Su voto ya fue emitido
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            <div id="voto-correcto" class="d-none alert alert-success alert-dismissible mt-3 rounded-pill fade show" role="alert">
+                <strong>Correcto!</strong> Su voto ha sido emitido <span></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="voto-incorrecto" class="d-none alert alert-danger alert-dismissible mt-3 rounded-pill fade show" role="alert">
+                <strong>Error!</strong> Su voto no pudo ser emitido
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="voto-hecho" class="d-none alert alert-warning alert-dismissible mt-3 rounded-pill fade show" role="alert">
+                <strong>Atención!</strong> Su voto ya fue emitido
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -120,12 +120,12 @@
 
 <script>
     $(document).ready(() => {
-        
+
         const $form = $('#form')
         const ciudadanoId = $('#ciudadanoId').val()
         const $radio = $('input[name="eleccion"]')
 
-        verificarSiYaVoto()    
+        verificarSiYaVoto()
 
         $form.on('submit', function (e) {
 
@@ -149,7 +149,7 @@
                     }
                 },
                 error: function (content) {
-                     $('#voto-incorrecto').removeClass('d-none')
+                    $('#voto-incorrecto').removeClass('d-none')
                 }
             })
         })

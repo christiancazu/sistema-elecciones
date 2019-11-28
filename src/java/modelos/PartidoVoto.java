@@ -30,5 +30,9 @@ public class PartidoVoto {
     public void setVotos(int votos) {
         this.votos = votos;
     }
+    
+    public void incrementarVoto() {
+        this.votos++;
+    }
  
 }

@@ -10,4 +10,8 @@ public interface IPartidoDAO extends IDAO<Partido> {
 
     List<PartidoVoto> obtenerPartidoVotos() throws Exception;
     
+    List<PartidoVoto> obtenerPartidoVotosPorUbigeo(int idUbigeo) throws Exception;
+    
+    int obtenerVotosPorUbigeoPorBusqueda(int idUbigeo, String busqueda) throws Exception;
+    
 }

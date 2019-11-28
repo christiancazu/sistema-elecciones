@@ -15,30 +15,51 @@ import utils.MySQLConexion;
 public class MySQLUbigeoDAO implements IUbigeoDAO {
 
     private static final String OBTENER_TODOS = "SELECT * FROM ubigeo";
-    
+    private static final String OBTENER_POR_ID = "SELECT * FROM ubigeo WHERE id = ? LIMIT 1";
+
     private Connection connection;
     private PreparedStatement pstm;
     private ResultSet rs;
-    
+
     public MySQLUbigeoDAO() {
         connection = MySQLConexion.conectar();
         pstm = null;
         rs = null;
     }
-    
+
     @Override
     public Ubigeo obtenerPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Ubigeo ubigeo = null;
+
+        try {
+            connection = MySQLConexion.conectar();
+            pstm = connection.prepareStatement(OBTENER_POR_ID);
+
+            pstm.setInt(1, id);
+
+            rs = pstm.executeQuery();
+
+            rs.next();
+
+            ubigeo = new Ubigeo();
+            ubigeo.setId(rs.getInt("id"));
+            ubigeo.setNombre(rs.getString("nombre"));
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLUbigeoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ubigeo;
     }
 
     @Override
     public List<Ubigeo> obtenerTodos() {
-        List<Ubigeo> ubigeos = null;        
+        List<Ubigeo> ubigeos = null;
+
         try {
             connection = MySQLConexion.conectar();
             pstm = connection.prepareStatement(OBTENER_TODOS);
             rs = pstm.executeQuery();
-            
+
             ubigeos = new ArrayList<>();
             while (rs.next()) {
                 Ubigeo ciudadano = new Ubigeo();
@@ -48,7 +69,7 @@ public class MySQLUbigeoDAO implements IUbigeoDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLUbigeoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
         return ubigeos;
     }
 
@@ -66,5 +87,5 @@ public class MySQLUbigeoDAO implements IUbigeoDAO {
     public boolean eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page='../componentes/comunes/cabecera.jsp'/>
 
@@ -11,99 +12,139 @@
 </div>
 
 <div class="container my-5">
-    
+
     <!--menu-->
     <jsp:include page='../componentes/comunes/menu.jsp'/>
-    
-    <h1 class="text-center text-white m-4">RESULTADOS DE LA VOTACIÓN</h1>
-    <div class="d-flex flex-row justify-content-center">
-        <div class="mx-2">
-            <h3 class="text-center text-grey">
-                votos nulos: 
-                <span class="badge badge-secondary rounded-pill">
-                    <h5 class="px-4">${nulos}</h5>
-                </span>
-            </h3>
+
+    <h1 class="text-center text-white m-4 text-uppercase" id="resultados-ubigeo"></h1>
+
+    <div class="row justify-content-center my-2">
+        <div class="col-xs-12 col-md-3">
+            <div class="list-group">
+                <li class="list-group-item active bg-dark">Mesas de votación</li>
+                <button 
+                    type="button" 
+                    class="list-group-item list-group-item-action"
+                    onclick="obtenerVotosPorUbigeo('general')">
+                    General
+                </button>
+                <c:forEach var="ubigeo" items="${ubigeos}">  
+                    <button 
+                        type="button" 
+                        class="list-group-item list-group-item-action"
+                        onclick="obtenerVotosPorUbigeo(${ubigeo.getId()})">
+                        ${ubigeo.getNombre()}
+                    </button>
+                </c:forEach>
+            </div>
         </div>
-        <div class="mx-2">
-            <h3 class="text-center text-grey">
-                votos en blanco: 
-                <span class="badge badge-secondary rounded-pill">
-                    <h5 class="px-4">${blancos}</h5>
-                </span>
-            </h3>    
+        <div class="col-xs-12 col-md-9">
+            <table class="table table-striped table-hover bg-white">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" class="text-center">Partido</th>
+                        <th scope="col">Votos</th>
+                        <th scope="col">Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody style="line-height: 4">
+                    <tr id="tr-nulos">
+                        <td style="height: 5rem;">NULOS</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                    </tr>
+                    <tr id="tr-blancos">
+                        <td style="height: 5rem;">BLANCOS</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                    </tr>
+
+                    <tr class="bg-dark text-light" id="tr-total">
+                        <td style="height: 5rem;">TOTAL</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">100 %</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <table class="table table-striped table-hover bg-white">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Partido</th>
-                <th scope="col">votos</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Porcentaje</th>
-                <!--            <th scope="col" class="text-center">Candidato</th>
-                            <th scope="col" class="text-center">Miembro de mesa</th>
-                            <th scope="col" class="text-center">Voto emitido</th>-->
-                <!--<th scope="col" class="text-center">Acción</th>-->
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="ciudadano" items="${ciudadanos}">  
-                <tr>
-                    <td>${ciudadano.getDni()}</td>
-                    <td>${ciudadano.getApellidos()}</td>
-                    <td>${ciudadano.getNombres()}</td>
-                    <td class="text-center">
-                        <c:choose>
-                            <c:when test="${ciudadano.getCandidato() == true}">
-                                <span class="badge badge-primary badge-outlined">
-                                    <div class="h6 mb-0">si</div>
-                                </span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="badge badge-danger badge-outlined">
-                                    <div class="h6 mb-0">no</div>
-                                </span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td class="text-center">
-                        <c:choose>
-                            <c:when test="${ciudadano.getMiembromesa() == true}">
-                                <span class="badge badge-primary badge-outlined">
-                                    <div class="h6 mb-0">si</div>
-                                </span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="badge badge-danger badge-outlined">
-                                    <div class="h6 mb-0">no</div>
-                                </span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td class="text-center">
-                        <c:choose>
-                            <c:when test="${ciudadano.getEmitido()}">
-                                <span class="badge badge-primary badge-outlined">
-                                    <div class="h6 mb-0">si</div>
-                                </span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="badge badge-danger badge-outlined">
-                                    <div class="h6 mb-0">no</div>
-                                </span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <!--            <td>
-                                    <button class="btn btn-success btn-block">Editar</button>
-                                </td>-->
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
 </div>
 
 <jsp:include page='../componentes/comunes/piecera.jsp'/>
 
+<script>
+    const baseURL = location.origin + "/" + location.pathname.split('/')[1]
+    
+    const $trNulos = $("#tr-nulos")
+    const $trBlancos = $("#tr-blancos")
+    const $trTotal = $("#tr-total")
+    
+    const $resultadosUbigeo = $("#resultados-ubigeo")
+    
+    $(document).ready(() => {
+        obtenerVotosPorUbigeo("general")
+    })
 
+    function obtenerVotosPorUbigeo(id) {
+        $.ajax({
+            type: 'GET',
+            url: 'revisarVotacion?ubigeo=' + id,
+            success: function (respuesta) {
+                console.warn(respuesta)
+                rellenarTituloResultados(respuesta)
+                rellenarNulos(respuesta)
+                rellenarBlancos(respuesta)
+                rellenarPartidoVotos(respuesta)
+                rellenarTotal(respuesta)
+            },
+            error: function (respuesta) {
+                console.error(respuesta)
+            }
+        })
+    }
+    function rellenarTituloResultados({nombreUbigeo}) {
+        $resultadosUbigeo.html('RESULTADOS ' + nombreUbigeo)
+    }
+    
+    function rellenarNulos({total, nulos}) {
+        $trNulos.children().eq(1).empty()
+        $trNulos.children().eq(2).empty()
+        $trNulos.children()[1].append(nulos | 0)
+        $trNulos.children()[2].append(((nulos/total*100).toFixed(2) | 0)  + ' %')
+    }
+    
+    function rellenarBlancos({total, blancos}) {
+        $trBlancos.children().eq(1).empty()
+        $trBlancos.children().eq(2).empty()
+        $trBlancos.children()[1].append(blancos | 0)
+        $trBlancos.children()[2].append(((blancos/total*100).toFixed(2) | 0)  + ' %')
+    }
+    
+    function rellenarPartidoVotos({total, partidoVotos}) {
+        let plantilla = ''
+        
+        $('.partidos-insertados').remove()
+       
+        partidoVotos.forEach(partidoVoto => {
+            plantilla += '<tr class="partidos-insertados"><td class="d-flex justify-content-between">'
+            plantilla += partidoVoto.partido.nombre
+            plantilla += '<div class="img-votacion-container">'
+            plantilla += '<img src="' + baseURL +'/recursos/imagenes/' + partidoVoto.partido.imagen + '" class="img-votacion" alt="...">'
+            plantilla += '</div>'
+            plantilla += '</td>'
+            plantilla += '<td class="text-center" style="width: 2rem">'
+            plantilla += partidoVoto.votos | 0
+            plantilla += '</td>'
+            plantilla += '<td class="text-center" style="width: 2rem">'
+            plantilla += ((partidoVoto.votos/total*100).toFixed(2) | 0)  + ' %'
+            plantilla += '</td></tr>'
+        })
+        
+        $(plantilla).insertBefore($trTotal)  
+    }
+    
+    function rellenarTotal({total}) {
+        $trTotal.children().eq(1).empty()
+        $trTotal.children()[1].append(total)
+    }
+</script>

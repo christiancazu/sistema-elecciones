@@ -9,6 +9,8 @@ public interface ICiudadanoDAO extends IDAO<Ciudadano> {
     
     List<Ciudadano> obtenerTodosPorUbigeo(int ubigeo) throws Exception;
     
+    List<Ciudadano> obtenerTodosPorUbigeoEmitidos(int ubigeo) throws Exception;
+    
     List<Ciudadano> obtenerTodosNoMiembrosDeMesa() throws Exception;
     
 }
