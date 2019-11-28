@@ -2,55 +2,18 @@
 
 <jsp:include page='../componentes/comunes/cabecera.jsp'/>
 
-<div class="btn-salir-container">
-    <a href="${pageContext.request.contextPath}" class="mx-2">
-        <span class="badge badge-secondary rounded-pill">
-            <h5 class="px-4 text-wrap m-0">salir</h5>
-        </span>
-    </a>
-</div>
+<!--boton Salir-->
+<jsp:include page='../componentes/comunes/botonSalir.jsp'/>     
 
 <div class="container my-5">
-    <div class="jumbotron jumbotron-fluid bg-light rounded-pill p-0">
-        <div class="container">
-            <h6 class="display-4 text-center text-primary">Sistema de Elecciones</h6>
-        </div>
-    </div>
-    <div class="row">
+
+    <!--menu-->
+    <jsp:include page='../componentes/comunes/menu.jsp'/>
+
+    <h1 class="text-center text-white m-4">REGISTRO</h1>
+
+    <div class="d-flex flex-row justify-content-center">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="d-flex justify-content-center">
-                <a href="listarCiudadanos" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Listar ciudadanos</h5>
-                    </span>
-                </a>
-                <a href="registrarCiudadano" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Registrar ciudadano</h5>
-                    </span>
-                </a>
-                <a href="listarPartidos" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Listar partidos</h5>
-                    </span>
-                </a>
-                <a href="registrarPartido" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Registrar partido</h5>
-                    </span>
-                </a>
-                <a href="AsignarMiembrosMesa" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Miembros de Mesa</h5>
-                    </span>
-                </a>
-                <a href="revisarVotacion" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Revisar votación</h5>
-                    </span>
-                </a>
-            </div>
-            <h1 class="text-center text-white m-4">REGISTRO</h1>
             <div class="card card-signin">                
                 <div class="card-body">
                     <%-- alerta mensaje registro inválido --%>    
@@ -84,12 +47,12 @@
                     </c:if>
                     <h5 class="card-title text-center">Registrar partido</h5>
                     <form class="form-signin" action="registrarPartido" method="POST" enctype="multipart/form-data">                          
-                        
+
                         <div class="form-label-group">
                             <input type="text" name="nombre" id="inputNombre" class="form-control" placeholder="ingrese nombre del partido" required>
                             <label for="inputNombre">Nombre</label>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="">Subir imágen:</label>
                             <div class="input-group">
@@ -109,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputCiudadano">Candidato</label>
@@ -143,7 +106,7 @@
             return $(this).val() === null ? "Elija una imagen" : "Modificar imagen"
         })
     })
-    
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();

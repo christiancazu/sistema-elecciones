@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelos.PartidoVoto;
 import utils.MySQLConexion;
 
 public class MySQLPartidoDAO implements IPartidoDAO {
@@ -21,6 +22,8 @@ public class MySQLPartidoDAO implements IPartidoDAO {
     private static final String ASIGNAR_CANDIDATO = "UPDATE ciudadano SET candidato = 1 where id = ?";
     private static final String ACTUALIZAR = "UPDATE partido SET nombre = ?, imagen = ?, ciudadano = ? WHERE id = ?";
     private static final String ELIMINAR = "DELETE FROM partido WHERE id = ?";
+    private static final String OBTENER_VOTOS_POR_BUSQUEDA = "SELECT COUNT(*) FROM voto WHERE eleccion = ?";
+    private static final String OBTENER_VOTOS_NULOS = "SELECT COUNT(*) FROM voto WHERE eleccion IS NULL";
 
     private Connection connection;
     private PreparedStatement pstm;
@@ -60,6 +63,7 @@ public class MySQLPartidoDAO implements IPartidoDAO {
     @Override
     public List<Partido> obtenerTodos() throws Exception {
         List<Partido> partidos = null;
+        
         try {
             pstm = connection.prepareStatement(OBTENER_TODOS);
             rs = pstm.executeQuery();            
@@ -163,6 +167,62 @@ public class MySQLPartidoDAO implements IPartidoDAO {
             MySQLConexion.cerrar();
         }
         return eliminado;
+    }
+
+    @Override
+    public List<PartidoVoto> obtenerPartidoVotos() throws Exception {
+        List<PartidoVoto> partidoVotos = new ArrayList();
+        
+        List<Partido> partidos = obtenerTodos();
+        
+        connection = MySQLConexion.conectar();
+        
+        try {
+            for (int i = 0; i < partidos.size(); i++) {            
+                pstm = connection.prepareStatement(OBTENER_VOTOS_POR_BUSQUEDA);
+            
+                pstm.setInt(1, partidos.get(i).getId());
+
+                rs = pstm.executeQuery();  
+
+                rs.next();
+
+                partidoVotos.add(new PartidoVoto(partidos.get(i), rs.getInt("count(*)")));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            MySQLConexion.cerrar();
+        }
+        return partidoVotos;  
+    }
+
+    @Override
+    public int obtenerVotosPorBusqueda(String busqueda) throws Exception {
+        int votos = 0;
+        try {
+            // busca como 0 los votos blancos
+            if (busqueda.equals("blancos")) {
+                pstm = connection.prepareStatement(OBTENER_VOTOS_POR_BUSQUEDA);
+                pstm.setInt(1, 0);
+            } 
+            // busca como "NULL" los votos nulos
+            else {
+                pstm = connection.prepareStatement(OBTENER_VOTOS_NULOS);
+            }
+
+            rs = pstm.executeQuery();  
+                        
+            rs.next();
+            
+            votos = rs.getInt("count(*)");
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            MySQLConexion.cerrar();
+        }
+        return votos;
     }
 
 }

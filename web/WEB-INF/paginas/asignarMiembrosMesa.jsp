@@ -2,55 +2,18 @@
 
 <jsp:include page='../componentes/comunes/cabecera.jsp'/>
 
-<div class="btn-salir-container">
-    <a href="${pageContext.request.contextPath}" class="mx-2">
-        <span class="badge badge-secondary rounded-pill">
-            <h5 class="px-4 text-wrap m-0">salir</h5>
-        </span>
-    </a>
-</div>
+<!--boton Salir-->
+<jsp:include page='../componentes/comunes/botonSalir.jsp'/>     
 
 <div class="container my-5">
-    <div class="jumbotron jumbotron-fluid bg-light rounded-pill p-0">
-        <div class="container">
-            <h6 class="display-4 text-center text-primary">Sistema de Elecciones</h6>
-        </div>
-    </div>
-    <div class="row">
+
+    <!--menu-->
+    <jsp:include page='../componentes/comunes/menu.jsp'/>
+
+    <h1 class="text-center text-white m-4">ASIGNAR</h1>
+
+    <div class="d-flex flex-row justify-content-center">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="d-flex justify-content-center">
-                <a href="listarCiudadanos" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Listar ciudadanos</h5>
-                    </span>
-                </a>
-                <a href="registrarCiudadano" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Registrar ciudadano</h5>
-                    </span>
-                </a>
-                <a href="listarPartidos" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Listar partidos</h5>
-                    </span>
-                </a>
-                <a href="registrarPartido" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Registrar partido</h5>
-                    </span>
-                </a>
-                <a href="AsignarMiembrosMesa" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Miembros de Mesa</h5>
-                    </span>
-                </a>
-                <a href="revisarVotacion" class="mx-2">
-                    <span class="badge badge-secondary rounded-pill">
-                        <h5 class="px-4 text-wrap m-0">Revisar votación</h5>
-                    </span>
-                </a>
-            </div>
-            <h1 class="text-center text-white m-4">ASIGNAR</h1>
             <div class="card card-signin">                
                 <div class="card-body">
                     <h5 class="card-title text-center">Asignar miembros de mesa</h5>
@@ -61,7 +24,7 @@
                             </div>
                             <select name="mesa" class="custom-select" id="inputMesa" required>                                     
                                 <option disabled value="" selected hidden>Elegir...</option>
-                                
+
                                 <!-- no muestra mesas donde ya tenga el miembrouno registrado-->
                                 <c:forEach var="mesa" items="${mesas}">
                                     <c:if test = "${mesa.getMiembrouno().getId() == 0}">
@@ -72,7 +35,7 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        
+
                         <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputMiembrouno">Primer miembro</label>
@@ -85,14 +48,14 @@
                                         <option 
                                             value="${ciudadano.getId()}" 
                                             data-ubigeo="${ciudadano.getUbigeo().getId()}"
-                                        >
+                                            >
                                             ${ciudadano.getNombres()} ${ciudadano.getApellidos()}
                                         </option>
                                     </c:if>
                                 </c:forEach>
                             </select>
                         </div>
-                        
+
                         <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputMiembrodos">Segundo miembro</label>
@@ -105,14 +68,14 @@
                                         <option 
                                             value="${ciudadano.getId()}" 
                                             data-ubigeo="${ciudadano.getUbigeo().getId()}"
-                                        >
+                                            >
                                             ${ciudadano.getNombres()} ${ciudadano.getApellidos()}
                                         </option>
                                     </c:if>
                                 </c:forEach>
                             </select>
                         </div>
-                        
+
                         <div class="input-group mb-3">                            
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputMiembrotres">Tercer miembro</label>
@@ -125,7 +88,7 @@
                                         <option 
                                             value="${ciudadano.getId()}" 
                                             data-ubigeo="${ciudadano.getUbigeo().getId()}"
-                                        >
+                                            >
                                             ${ciudadano.getNombres()} ${ciudadano.getApellidos()}
                                         </option>
                                     </c:if>
@@ -178,13 +141,13 @@
     $inputMiembrouno = $('#inputMiembrouno')
     $inputMiembrodos = $('#inputMiembrodos')
     $inputMiembrotres = $('#inputMiembrotres')
-    
+
     $inputMesa.on('change', function () {
         const mesaSeleccionada = $(this).val()
         mostrarTodasLasOpciones()
         ocultarPorUbigeo(mesaSeleccionada)
     })
-    
+
     function mostrarTodasLasOpciones() {
         $inputMiembrouno.find('option').each(function (index, option) {
             $(option).css('display', 'block')

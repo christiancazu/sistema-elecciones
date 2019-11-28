@@ -1,11 +1,13 @@
 package dao.impl;
 
 import dao.IVotoDAO;
+import entidades.Ciudadano;
 import entidades.Voto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,10 +18,7 @@ public class MySQLVotoDAO implements IVotoDAO {
     private static final String OBTENER_TODOS = "SELECT * FROM voto";
     private static final String ASIGNAR_EMITIDO = "UPDATE ciudadano SET emitido = 1 where id = ?";
     private static final String VERIFICAR_VOTO_EMITIDO = "SELECT * FROM voto where ciudadano = ?";
-
     private static final String CREAR = "INSERT INTO voto VALUES(null, ?, ?)";
-    private static final String OBTENER_NULOS = "SELECT COUNT(*) FROM voto WHERE eleccion = ?";
-    private static final String OBTENER_BLANCOS = "SELECT COUNT(*) FROM voto WHERE eleccion = ?";
 
     private Connection connection;
     private PreparedStatement pstm;
@@ -38,7 +37,29 @@ public class MySQLVotoDAO implements IVotoDAO {
 
     @Override
     public List<Voto> obtenerTodos() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Voto> votos = null;
+        
+        try {
+            pstm = connection.prepareStatement(OBTENER_TODOS);
+            rs = pstm.executeQuery();            
+
+            votos = new ArrayList();
+            
+            while (rs.next()) {
+                Voto voto = new Voto();
+
+                voto.setId(rs.getInt("id"));
+                voto.setCiudadano(new Ciudadano(rs.getInt("ciudadano")));
+                voto.setEleccion(rs.getInt("eleccion"));
+
+                votos.add(voto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            MySQLConexion.cerrar();
+        }        
+        return votos;
     }
 
     @Override
@@ -93,47 +114,5 @@ public class MySQLVotoDAO implements IVotoDAO {
     @Override
     public boolean eliminar(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int obtenerNulos() throws Exception {
-
-        try {
-            pstm = connection.prepareStatement(OBTENER_NULOS);
-            
-            pstm.setString(1, "NULL");
-            
-            rs = pstm.executeQuery();  
-                        
-            rs.next();
-            
-            return rs.getInt("count(*)");
-        } catch (SQLException ex) {
-            Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            MySQLConexion.cerrar();
-        }
-        return 0;
-    }
-
-    @Override
-    public int obtenerBlancos() throws Exception {
-        try {
-            pstm = connection.prepareStatement(OBTENER_BLANCOS);
-            
-            pstm.setInt(1, 0);
-            
-            rs = pstm.executeQuery();  
-                        
-            rs.next();
-            
-            return rs.getInt("count(*)");
-        } catch (SQLException ex) {
-            Logger.getLogger(MySQLCiudadanoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            MySQLConexion.cerrar();
-        }
-        return 0;
-    }
-    
+    }    
 }
